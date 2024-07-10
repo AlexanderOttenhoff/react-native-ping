@@ -14,7 +14,7 @@ class Ping {
    * @memberof Ping
    */
   static async start(ipAddress, option) {
-    const result = await RNReactNativePing.start(ipAddress, option);
+    const result = await RNReactNativePing.start(ipAddress, option ?? {});
     return result;
   }
   static async getTrafficStats() {
