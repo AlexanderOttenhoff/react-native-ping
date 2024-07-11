@@ -43,6 +43,7 @@ public class RNReactNativePingModule extends ReactContextBaseJavaModule {
             payloadSize = option.getInt(PAYLOAD_SIZE_KEY);
         }
         final int finalTimeout = timeout;
+        final int finalPayloadSize = payloadSize;
 
         Handler mHandler = new Handler(handlerThread.getLooper());
         mHandler.post(new Runnable() {
@@ -52,7 +53,7 @@ public class RNReactNativePingModule extends ReactContextBaseJavaModule {
                     if (isFinish[0]) {
                         return;//Prevent multiple calls
                     }
-                    int rtt = PingUtil.getAvgRTT(ipAddress, 1, finalTimeout, payloadSize);
+                    int rtt = PingUtil.getAvgRTT(ipAddress, 1, finalTimeout, finalPayloadSize);
                     promise.resolve(Integer.valueOf(rtt));
                     isFinish[0] = true;
                 } catch (Exception e) {
