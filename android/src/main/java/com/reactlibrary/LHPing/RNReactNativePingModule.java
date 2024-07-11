@@ -12,8 +12,10 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
+
 public class RNReactNativePingModule extends ReactContextBaseJavaModule {
     private final String TIMEOUT_KEY = "timeout";
+    private final String PAYLOAD_SIZE_KEY = "payloadSize";
     private final ReactApplicationContext reactContext;
     HandlerThread handlerThread = new HandlerThread("HandlerThread");
 
@@ -33,8 +35,12 @@ public class RNReactNativePingModule extends ReactContextBaseJavaModule {
 
         final boolean[] isFinish = {false};
         int timeout = 1000;
+        int payloadSize = 56;
         if (option.hasKey(TIMEOUT_KEY)) {
             timeout = option.getInt(TIMEOUT_KEY);
+        }
+        if (option.hasKey(PAYLOAD_SIZE_KEY)) {
+            payloadSize = option.getInt(PAYLOAD_SIZE_KEY);
         }
         final int finalTimeout = timeout;
 
@@ -46,7 +52,7 @@ public class RNReactNativePingModule extends ReactContextBaseJavaModule {
                     if (isFinish[0]) {
                         return;//Prevent multiple calls
                     }
-                    int rtt = PingUtil.getAvgRTT(ipAddress, 1, finalTimeout);
+                    int rtt = PingUtil.getAvgRTT(ipAddress, 1, finalTimeout, payloadSize);
                     promise.resolve(Integer.valueOf(rtt));
                     isFinish[0] = true;
                 } catch (Exception e) {

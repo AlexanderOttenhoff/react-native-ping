@@ -35,7 +35,7 @@ public class PingUtil {
         if (isMatch(ipRegex, domain)) {
             return domain;
         }
-        String pingString = ping(createSimplePingCommand(1, 100, domain));
+        String pingString = ping(createSimplePingCommand(1, 100, domain, 56));
         if (null != pingString) {
             try {
                 String tempInfo = pingString.substring(pingString.indexOf("from") + 5);
@@ -54,7 +54,7 @@ public class PingUtil {
      * @return 最小RTT值，单位 ms 注意：-1是默认值，返回-1表示获取失败
      */
     public static int getMinRTT(String url) {
-        return getMinRTT(url, 1, 100);
+        return getMinRTT(url, 1, 100, 56);
     }
 
     /**
@@ -64,7 +64,7 @@ public class PingUtil {
      * @return 平均RTT值，单位 ms 注意：-1是默认值，返回-1表示获取失败
      */
     public static int getAvgRTT(String url) {
-        return getAvgRTT(url, 1, 100);
+        return getAvgRTT(url, 1, 100, 56);
     }
 
     /**
@@ -74,7 +74,7 @@ public class PingUtil {
      * @return 最大RTT值，单位 ms 注意：-1是默认值，返回-1表示获取失败
      */
     public static int getMaxRTT(String url) {
-        return getMaxRTT(url, 1, 100);
+        return getMaxRTT(url, 1, 100, 56);
     }
 
     /**
@@ -84,7 +84,7 @@ public class PingUtil {
      * @return RTT平均偏差，单位 ms 注意：-1是默认值，返回-1表示获取失败
      */
     public static int getMdevRTT(String url) {
-        return getMdevRTT(url, 1, 100);
+        return getMdevRTT(url, 1, 100, 56);
     }
 
     /**
@@ -95,12 +95,12 @@ public class PingUtil {
      * @param timeout 需要ping的超时，单位ms
      * @return 最小RTT值，单位 ms 注意：-1是默认值，返回-1表示获取失败
      */
-    public static int getMinRTT(String url, int count, int timeout) {
+    public static int getMinRTT(String url, int count, int timeout, int payloadSize) {
         String domain = getDomain(url);
         if (null == domain) {
             return -1;
         }
-        String pingString = ping(createSimplePingCommand(count, timeout, domain));
+        String pingString = ping(createSimplePingCommand(count, timeout, domain, payloadSize));
         if (null != pingString) {
             try {
                 String tempInfo = pingString.substring(pingString.indexOf("min/avg/max/mdev") + 19);
@@ -121,8 +121,8 @@ public class PingUtil {
      * @param timeout 需要ping的超时时间，单位 ms
      * @return 平均RTT值，单位 ms 注意：-1是默认值，返回-1表示获取失败
      */
-    public static int getAvgRTT(String domain, int count, int timeout) {
-        String pingString = ping(createSimplePingCommand(count, timeout, domain), timeout);
+    public static int getAvgRTT(String domain, int count, int timeout, int payloadSize) {
+        String pingString = ping(createSimplePingCommand(count, timeout, domain, payloadSize), timeout);
         String tempInfo = pingString.substring(pingString.indexOf("min/avg/max/mdev") + 19);
         String[] temps = tempInfo.split("/");
         return Math.round(Float.valueOf(temps[1]));
@@ -136,12 +136,12 @@ public class PingUtil {
      * @param timeout 需要ping的超时时间，单位ms
      * @return 最大RTT值，单位 ms 注意：-1是默认值，返回-1表示获取失败
      */
-    public static int getMaxRTT(String url, int count, int timeout) {
+    public static int getMaxRTT(String url, int count, int timeout, int payloadSize) {
         String domain = getDomain(url);
         if (null == domain) {
             return -1;
         }
-        String pingString = ping(createSimplePingCommand(count, timeout, domain));
+        String pingString = ping(createSimplePingCommand(count, timeout, domain, payloadSize));
         if (null != pingString) {
             try {
                 String tempInfo = pingString.substring(pingString.indexOf("min/avg/max/mdev") + 19);
@@ -162,12 +162,12 @@ public class PingUtil {
      * @param timeout 需要ping的超时时间，单位ms
      * @return RTT平均偏差，单位 ms 注意：-1是默认值，返回-1表示获取失败
      */
-    public static int getMdevRTT(String url, int count, int timeout) {
+    public static int getMdevRTT(String url, int count, int timeout, int payloadSize) {
         String domain = getDomain(url);
         if (null == domain) {
             return -1;
         }
-        String pingString = ping(createSimplePingCommand(count, timeout, domain));
+        String pingString = ping(createSimplePingCommand(count, timeout, domain, payloadSize));
         if (null != pingString) {
             try {
                 String tempInfo = pingString.substring(pingString.indexOf("min/avg/max/mdev") + 19);
@@ -206,8 +206,8 @@ public class PingUtil {
      * @param timeout 需要ping的超时时间，单位 ms
      * @return 丢包率 如50%可得 50，注意：-1是默认值，返回-1表示获取失败
      */
-    public static float getPacketLossFloat(String url, int count, int timeout) {
-        String packetLossInfo = getPacketLoss(url, count, timeout);
+    public static float getPacketLossFloat(String url, int count, int timeout, int payloadSize) {
+        String packetLossInfo = getPacketLoss(url, count, timeout, payloadSize);
         if (null != packetLossInfo) {
             try {
                 return Float.valueOf(packetLossInfo.replace("%", ""));
@@ -225,7 +225,7 @@ public class PingUtil {
      * @return 丢包率 x%
      */
     public static String getPacketLoss(String url) {
-        return getPacketLoss(url, 1, 100);
+        return getPacketLoss(url, 1, 100, 56);
     }
 
     /**
@@ -236,12 +236,12 @@ public class PingUtil {
      * @param timeout 需要ping的超时时间，单位ms
      * @return 丢包率 x%
      */
-    public static String getPacketLoss(String url, int count, int timeout) {
+    public static String getPacketLoss(String url, int count, int timeout, int payloadSize) {
         String domain = getDomain(url);
         if (null == domain) {
             return null;
         }
-        String pingString = ping(createSimplePingCommand(count, timeout, domain));
+        String pingString = ping(createSimplePingCommand(count, timeout, domain, payloadSize));
         if (null != pingString) {
             try {
                 String tempInfo = pingString.substring(pingString.indexOf("received,"));
@@ -329,8 +329,8 @@ public class PingUtil {
         return null;
     }
 
-    private static String createSimplePingCommand(int count, int timeout, String domain) {
-        return "/system/bin/ping -c " + count + " -w " + timeout + " " + domain;
+    private static String createSimplePingCommand(int count, int timeout, String domain, int payloadSize) {
+        return "/system/bin/ping -c " + count + " -w " + timeout + " -s " + payloadSize + " " + domain;
     }
 
     private static String createPingCommand(ArrayMap<String, String> map, String domain) {

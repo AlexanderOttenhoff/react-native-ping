@@ -1,7 +1,7 @@
 type PingOptions = {
   /** Amount of time in ms to wait before reporting ping failed (Default: 1000ms) */
   timeout?: number;
-  /** [iOS only] Size of the payload to send to the server (Default: 56 bytes) */
+  /** Size of the payload to send to the server (Default: 56 bytes) */
   payloadSize?: number;
 };
 
