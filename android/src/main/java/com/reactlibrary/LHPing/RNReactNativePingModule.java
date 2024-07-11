@@ -27,7 +27,7 @@ public class RNReactNativePingModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void start(final String ipAddress, ReadableMap option, final Promise promise) {
-        if (ipAddress == null || (ipAddress != null && ipAddress.length() == 0)) {
+        if (ipAddress == null || ipAddress.length() == 0) {
             LHDefinition.PING_ERROR_CODE error = LHDefinition.PING_ERROR_CODE.HostErrorNotSetHost;
             promise.reject(error.getCode(), error.getMessage());
             return;
