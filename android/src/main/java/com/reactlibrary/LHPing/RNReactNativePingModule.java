@@ -1,4 +1,3 @@
-
 package com.reactlibrary.LHPing;
 
 import android.net.TrafficStats;
@@ -14,6 +13,7 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 
 public class RNReactNativePingModule extends ReactContextBaseJavaModule {
+
     private final String TIMEOUT_KEY = "timeout";
     private final String PAYLOAD_SIZE_KEY = "payloadSize";
     private final ReactApplicationContext reactContext;
@@ -59,8 +59,8 @@ public class RNReactNativePingModule extends ReactContextBaseJavaModule {
                     if (isFinish[0]) {//Prevent multiple calls
                         return;
                     }
-                    LHDefinition.PING_ERROR_CODE error =
-                            LHDefinition.PING_ERROR_CODE.HostErrorUnknown;
+                    LHDefinition.PING_ERROR_CODE error
+                            = LHDefinition.PING_ERROR_CODE.HostErrorUnknown;
                     promise.reject(error.getCode(), error.getMessage());
                     isFinish[0] = true;
                 }
@@ -94,8 +94,8 @@ public class RNReactNativePingModule extends ReactContextBaseJavaModule {
                 long newReceivedTotal = TrafficStats.getTotalRxBytes();
                 long newSendTotal = TrafficStats.getTotalTxBytes();
 
-                String receivedNetworkSpeed = bytesToAvaiUnit(newReceivedTotal - receiveTotal) +
-                        "/s";
+                String receivedNetworkSpeed = bytesToAvaiUnit(newReceivedTotal - receiveTotal)
+                        + "/s";
                 String sendNetworkSpeed = bytesToAvaiUnit(newSendTotal - sendTotal) + "/s";
                 WritableMap map = Arguments.createMap();
 

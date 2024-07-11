@@ -1,6 +1,7 @@
 package com.reactlibrary.LHPing;
 
 public class LHDefinition {
+
     public enum PING_ERROR_CODE {
         Timeout("0", "PingUtil_Message_Timeout"),
         PreviousPingIsStillRuning("1", "PingUtil_Message_PreviousPingIsStillRuning"),

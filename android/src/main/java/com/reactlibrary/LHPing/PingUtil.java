@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.regex.Pattern;
 
-
 /**
  * 类描述:手机ping工具类<br>
  * 权限 <uses-permission android:name="android.permission.INTERNET"/> <br>
@@ -17,9 +16,9 @@ import java.util.regex.Pattern;
  */
 public class PingUtil {
 
-    private static final String ipRegex =
-            "((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|(" +
-                    "(1\\d{2})|([1-9]?\\d))))";
+    private static final String ipRegex
+            = "((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|("
+            + "(1\\d{2})|([1-9]?\\d))))";
 
     /**
      * 获取由ping url得到的IP地址
@@ -90,8 +89,8 @@ public class PingUtil {
     /**
      * 获取ping url的最小RTT
      *
-     * @param url     需要ping的url地址
-     * @param count   需要ping的次数
+     * @param url 需要ping的url地址
+     * @param count 需要ping的次数
      * @param timeout 需要ping的超时，单位ms
      * @return 最小RTT值，单位 ms 注意：-1是默认值，返回-1表示获取失败
      */
@@ -116,8 +115,8 @@ public class PingUtil {
     /**
      * 获取ping url的平均RTT
      *
-     * @param domain  需要ping的domain
-     * @param count   需要ping的次数
+     * @param domain 需要ping的domain
+     * @param count 需要ping的次数
      * @param timeout 需要ping的超时时间，单位 ms
      * @return 平均RTT值，单位 ms 注意：-1是默认值，返回-1表示获取失败
      */
@@ -131,8 +130,8 @@ public class PingUtil {
     /**
      * 获取ping url的最大RTT
      *
-     * @param url     需要ping的url地址
-     * @param count   需要ping的次数
+     * @param url 需要ping的url地址
+     * @param count 需要ping的次数
      * @param timeout 需要ping的超时时间，单位ms
      * @return 最大RTT值，单位 ms 注意：-1是默认值，返回-1表示获取失败
      */
@@ -157,8 +156,8 @@ public class PingUtil {
     /**
      * 获取RTT的平均偏差
      *
-     * @param url     需要ping的url
-     * @param count   需要ping的次数
+     * @param url 需要ping的url
+     * @param count 需要ping的次数
      * @param timeout 需要ping的超时时间，单位ms
      * @return RTT平均偏差，单位 ms 注意：-1是默认值，返回-1表示获取失败
      */
@@ -201,8 +200,8 @@ public class PingUtil {
     /**
      * 获取ping url的丢包率，浮点型
      *
-     * @param url     需要ping的url地址
-     * @param count   需要ping的次数
+     * @param url 需要ping的url地址
+     * @param count 需要ping的次数
      * @param timeout 需要ping的超时时间，单位 ms
      * @return 丢包率 如50%可得 50，注意：-1是默认值，返回-1表示获取失败
      */
@@ -231,8 +230,8 @@ public class PingUtil {
     /**
      * 获取ping url的丢包率
      *
-     * @param url     需要ping的url地址
-     * @param count   需要ping的次数
+     * @param url 需要ping的url地址
+     * @param count 需要ping的次数
      * @param timeout 需要ping的超时时间，单位ms
      * @return 丢包率 x%
      */
